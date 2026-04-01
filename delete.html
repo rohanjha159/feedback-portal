@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Remove Data</title><style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #870000, #190a05);
+  font-family: Arial;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* BOX */
+.container {
+  text-align: center;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 20px;
+}
+
+/* BUTTON */
+button {
+  padding: 12px 20px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.delete {
+  background: red;
+  color: white;
+}
+
+.delete:hover {
+  background: darkred;
+}
+</style></head><body><div class="container"><h2>⚠ Remove All Data</h2><p>This will delete all students, feedback and forms.</p><button class="delete" onclick="confirmDelete()">Delete All</button>
+
+</div><script>
+function confirmDelete(){
+  alert("All data deleted (demo)");
+}
+</script></body>
+</html>
