@@ -11,6 +11,15 @@ body {
   overflow: hidden;
 }
 
+/* HEADER */
+.header {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
 /* GRID */
 .container {
   display: flex;
@@ -22,8 +31,8 @@ body {
 
 /* CARDS */
 .card {
-  width: 250px;
-  height: 150px;
+  width: 260px;
+  height: 160px;
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(15px);
   border-radius: 20px;
@@ -34,6 +43,7 @@ body {
   cursor: pointer;
   transition: 0.4s;
   font-size: 18px;
+  padding: 20px;
 }
 
 .card:hover {
@@ -52,8 +62,9 @@ body {
   transform: scaleY(0);
   transform-origin: top;
   transition: 0.6s ease-in-out;
+  z-index: 999;
 }
-</style></head><body><div class="transition" id="transition"></div><div class="container">  <div class="card" onclick="goTo('create.html')">
+</style></head><body><div class="transition" id="transition"></div><div class="header">HOD Dashboard</div><div class="container">  <div class="card" onclick="goTo('create.html')">
     Create Feedback Form
   </div>  <div class="card" onclick="goTo('view.html')">
     View Feedbacks
