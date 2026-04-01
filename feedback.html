@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Feedback Form</title><style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f4037, #99f2c8);
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 420px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 20px;
+  color: white;
+}
+
+h2 {
+  text-align: center;
+}
+
+/* CRITERIA */
+.criteria {
+  margin: 15px 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* RANGE SLIDER */
+input[type="range"] {
+  width: 100%;
+}
+
+/* TEXTAREA */
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background: black;
+  color: white;
+}
+</style></head><body><div class="container"><h2>Feedback Form</h2><div class="criteria">
+  <label>Teaching Quality</label>
+  <input type="range" min="1" max="10">
+</div><div class="criteria">
+  <label>Subject Knowledge</label>
+  <input type="range" min="1" max="10">
+</div><div class="criteria">
+  <label>Interaction</label>
+  <input type="range" min="1" max="10">
+</div><div class="criteria">
+  <label>Punctuality</label>
+  <input type="range" min="1" max="10">
+</div><label>Remarks</label>
+
+<textarea rows="3"></textarea><button>Submit Feedback</button>
+
+</div></body>
+</html>
