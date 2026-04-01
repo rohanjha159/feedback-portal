@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HOD Dashboard</title><style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: Arial;
+  color: white;
+  overflow: hidden;
+}
+
+/* GRID */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 30px;
+}
+
+/* CARDS */
+.card {
+  width: 250px;
+  height: 150px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.4s;
+  font-size: 18px;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  background: rgba(255,255,255,0.2);
+}
+
+/* TRANSITION */
+.transition {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  top: 0;
+  left: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: 0.6s ease-in-out;
+}
+</style></head><body><div class="transition" id="transition"></div><div class="container">  <div class="card" onclick="goTo('create.html')">
+    Create Feedback Form
+  </div>  <div class="card" onclick="goTo('view.html')">
+    View Feedbacks
+  </div>  <div class="card" onclick="goTo('delete.html')">
+    Remove Data
+  </div></div><script>
+function goTo(page){
+  let t = document.getElementById("transition");
+  t.style.transform = "scaleY(1)";
+
+  setTimeout(()=>{
+    window.location.href = page;
+  }, 600);
+}
+</script></body>
+</html>
