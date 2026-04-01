@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Feedback Form</title><style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #232526, #414345);
+  font-family: Arial;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* BOX */
+.container {
+  width: 400px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 20px;
+}
+
+/* INPUT */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: none;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.publish {
+  background: #00ffcc;
+}
+
+.publish:hover {
+  background: #00ccaa;
+}
+</style></head><body><div class="container"><h2>Create Feedback Form</h2><label>Department</label>
+<input type="text" value="CSE" disabled>
+
+<label>Semester</label>
+<select>
+
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+</select><label>Subject</label>
+<input type="text" placeholder="Enter subject">
+
+<label>Professor</label>
+<input type="text" placeholder="Enter professor">
+
+<h4>Criteria</h4>
+<input type="text" placeholder="Teaching Quality">
+<input type="text" placeholder="Punctuality">
+<input type="text" placeholder="Interaction"><button class="publish">Publish Form</button>
+
+</div></body>
+</html>
