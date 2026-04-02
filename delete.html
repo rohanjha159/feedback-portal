@@ -1,50 +1,76 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Remove Data</title><style>
+<title>Delete Data</title><style>
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #870000, #190a05);
   font-family: Arial;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    #fff9c4,
+    #f8bbd0,
+    #eeeeee
+  );
 }
 
-/* BOX */
 .container {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
   text-align: center;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(15px);
-  padding: 40px;
-  border-radius: 20px;
 }
 
-/* BUTTON */
 button {
   padding: 12px 20px;
-  margin-top: 15px;
   border: none;
   border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.delete {
   background: red;
   color: white;
+  cursor: pointer;
 }
 
-.delete:hover {
-  background: darkred;
+/* LOADER */
+.loader-overlay {
+  position: fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background: rgba(255,255,255,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
 }
-</style></head><body><div class="container"><h2>⚠ Remove All Data</h2><p>This will delete all students, feedback and forms.</p><button class="delete" onclick="confirmDelete()">Delete All</button>
 
+.loader {
+  width: 50px;
+  aspect-ratio: 1.154;
+  display: grid;
+  color: #000;
+  background:
+    linear-gradient(to bottom left ,#0000 calc(50% - 1px),currentColor 0 calc(50% + 1px),#0000 0) right/50% 100%,
+    linear-gradient(to bottom right,#0000 calc(50% - 1px),currentColor 0 calc(50% + 1px),#0000 0) left /50% 100%,
+    linear-gradient(currentColor 0 0) bottom/100% 2px;
+  animation: l5 4s infinite linear;
+}
+@keyframes l5{
+  100% {transform:rotate(1turn)}
+}
+</style></head><body><div class="loader-overlay" id="loader">
+  <div class="loader"></div>
+</div><div class="container">
+  <h2>Delete All Data</h2>
+  <button onclick="del()">Delete</button>
 </div><script>
-function confirmDelete(){
-  alert("All data deleted (demo)");
+function del(){
+  document.getElementById("loader").style.display = "flex";
+
+  setTimeout(()=>{
+    alert("All data deleted (demo)");
+  },800);
 }
 </script></body>
 </html>
