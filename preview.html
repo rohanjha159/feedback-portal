@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Preview</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"><style>
+body {
+  margin: 0;
+  overflow: auto;
+  font-family: 'Poppins', sans-serif;
+
+  background-color: #fff9c4;
+  background-image:
+    linear-gradient(#c8e6c9 1px, transparent 1px),
+    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.container {
+  width: 500px;
+  margin: auto;
+  margin-top: 30px;
+  padding: 20px;
+  background: #d2a679;
+  border-radius: 10px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+/* RATING */
+select {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+}
+</style></head><body><div class="container">  <h2>Preview Form</h2>  <div id="preview"></div><button onclick="publish()">Publish Form</button>
+
+</div><script>
+
+let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+let criteria = JSON.parse(localStorage.getItem("criteria")) || [];
+
+function render(){
+
+  let container = document.getElementById("preview");
+  container.innerHTML = "";
+
+  subjects.forEach(sub => {
+
+    let card = document.createElement("div");
+    card.className = "card";
+
+    let html = <h3>${sub.subject} - ${sub.prof}</h3>;
+
+    criteria.forEach(c => {
+      html += `
+        <label>${c}</label>
+        <select>
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option>
+          <option>10</option>
+        </select>
+      `;
+    });
+
+    html += <input placeholder="Additional Remarks">;
+
+    card.innerHTML = html;
+
+    container.appendChild(card);
+  });
+}
+
+function publish(){
+
+  alert("Form Successfully Created ✅");
+
+  /* 🔥 future: yahan Firebase me save karenge */
+
+  window.location.href = "dashboard.html";
+}
+
+render();
+
+</script></body>
+</html>
