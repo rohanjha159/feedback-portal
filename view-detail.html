@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Detail</title><style>
+body {
+  font-family: Poppins;
+  background: #fff9c4;
+}
+
+.container {
+  width: 500px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
+}
+</style></head><body><div class="container">
+  <h2>Feedback Details</h2>
+  <div id="data"></div>
+</div><script>
+
+let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+let criteria = JSON.parse(localStorage.getItem("criteria")) || [];
+
+let container = document.getElementById("data");
+
+/* 🔥 TEMP RANDOM DATA (later real data) */
+subjects.forEach(sub => {
+
+  let card = document.createElement("div");
+  card.className = "card";
+
+  let html = <h3>${sub.subject} - ${sub.prof}</h3>;
+
+  criteria.forEach(c=>{
+    let random = Math.floor(Math.random()*10)+1;
+    html += <p>${c}: ${random}/10</p>;
+  });
+
+  html += <p>Remark: Good teaching</p>;
+
+  card.innerHTML = html;
+
+  container.appendChild(card);
+});
+
+</script></body>
+</html>
