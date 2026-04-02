@@ -1,127 +1,227 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Feedback Portal</title><!-- 🔥 PROFESSIONAL FONT --><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"><style>
+<title>Portal</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"><style>
 body {
   margin: 0;
-  height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
+  font-family: 'Poppins', sans-serif;
 
-  /* 🔥 LIGHT PURPLE BACKGROUND */
-  background: #e6d6f5;
+  /* 🔥 GREEN CROSS GRID */
+  background-color: #fff9c4;
+  background-image:
+    linear-gradient(#c8e6c9 1px, transparent 1px),
+    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* 🔥 FLOATING SHAPES */
-.shape {
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* 🔥 WOOD FRAME */
+.frame {
   position: absolute;
-  opacity: 0.3;
-}
-
-.shape1 {
-  width: 120px;
-  top: 10%;
-  left: 10%;
-}
-
-.shape2 {
-  width: 150px;
-  bottom: 10%;
-  right: 10%;
-}
-
-.shape3 {
-  width: 100px;
   top: 50%;
-  left: 70%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 18px;
+  background: #8b5a2b;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,0.6),
+    3px 3px 0 #6e4420,
+    -3px -3px 0 #a9743a;
 }
 
-/* 🔥 MAIN BOX */
 .container {
-  width: 350px;
-  padding: 30px;
-  border-radius: 15px;
-  background: #ffffff;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 320px;
+  padding: 25px;
+  background: #d2a679;
+  border-radius: 10px;
   text-align: center;
 }
 
-/* BUTTONS */
+/* 🔩 SCREWS */
+.screw {
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 30% 30%, #ddd, #777);
+  border-radius: 50%;
+  position: absolute;
+}
+
+.s1 { top:5px; left:5px; }
+.s2 { top:5px; right:5px; }
+.s3 { bottom:5px; left:5px; }
+.s4 { bottom:5px; right:5px; }
+
+/* BUTTON */
 button {
   width: 100%;
-  padding: 14px;
-  margin: 12px 0;
+  padding: 12px;
+  margin: 10px 0;
   border: none;
-  border-radius: 12px;
-  background: #eeeeee;
+  border-radius: 8px;
+  background: #eee;
   cursor: pointer;
-  font-size: 16px;
   transition: 0.3s;
 }
 
-/* 🔥 HOVER SCALE EFFECT */
 button:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
+</style></head><body><canvas id="canvas"></canvas>
 
-/* 🔥 LOADER OVERLAY */
-.loader-overlay {
-  position: fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  background: rgba(255,255,255,0.9);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-}
-
-/* 🔥 CUSTOM LOADER (AS YOU GAVE) */
-.loader {
-  width: 50px;
-  aspect-ratio: 1;
-  display: grid;
-  color: #000;
-  background:
-    linear-gradient(90deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/100% 14px,
-    linear-gradient(0deg, currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/14px 100%,
-    linear-gradient(currentColor 0 0) center/100% 2px,
-    linear-gradient(currentColor 0 0) center/2px 100%;
-  background-repeat: no-repeat;
-  animation: l6 4s infinite linear;
-}
-.loader::before,
-.loader::after {
-  content: "";
-  grid-area: 1/1;
-  background: inherit;
-  animation: inherit;
-}
-.loader::after {
-  animation-duration: 2s;
-}
-
-@keyframes l6{
-  100% {transform:rotate(1turn)}
-}
-</style></head><body><!-- 🔥 LOADER --><div class="loader-overlay" id="loader">
-  <div class="loader"></div>
-</div><!-- 🔥 CLIPART SHAPES (SVG) --><img src="https://cdn-icons-png.flaticon.com/512/4149/4149645.png" class="shape shape1">
-<img src="https://cdn-icons-png.flaticon.com/512/4149/4149678.png" class="shape shape2">
-<img src="https://cdn-icons-png.flaticon.com/512/4149/4149653.png" class="shape shape3"><!-- 🔥 MAIN CONTENT --><div class="container">
-  <h2>Feedback Portal</h2><button onclick="goTo('hod.html')">HOD Login</button>
-<button onclick="goTo('student.html')">Student Login</button>
-
+<div class="frame">
+<div class="screw s1"></div>
+<div class="screw s2"></div>
+<div class="screw s3"></div>
+<div class="screw s4"></div><div class="container">
+  <button onclick="goTo('hod.html')">HoD Login</button>
+  <button onclick="goTo('student.html')">Student Login</button>
+</div>
 </div><script>
-function goTo(page){
-  document.getElementById("loader").style.display = "flex";
 
-  setTimeout(()=>{
-    window.location.href = page;
-  },800);
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const colors = ["#ffcdd2","#bbdefb","#c8e6c9","#f8bbd0","#e1bee7"];
+
+class Shape {
+  constructor(){
+    this.size = 18 + Math.random()*10;
+
+    this.x = Math.random() * (canvas.width - this.size*2) + this.size;
+    this.y = Math.random() * (canvas.height - this.size*2) + this.size;
+
+    /* 🔥 SLOW SPEED */
+    this.dx = (Math.random()-0.5)*1;
+    this.dy = (Math.random()-0.5)*1;
+
+    this.color = colors[Math.floor(Math.random()*colors.length)];
+    this.type = Math.floor(Math.random()*5);
+  }
+
+  draw(){
+    ctx.fillStyle = this.color;
+
+    if(this.type === 0){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    else if(this.type === 1){
+      ctx.fillRect(this.x-this.size/2,this.y-this.size/2,this.size,this.size);
+    }
+
+    else if(this.type === 2){
+      ctx.fillRect(this.x-this.size,this.y-this.size/2,this.size*1.5,this.size);
+    }
+
+    else if(this.type === 3){
+      drawPolygon(this.x,this.y,5,this.size);
+    }
+
+    else if(this.type === 4){
+      drawPolygon(this.x,this.y,6,this.size);
+    }
+  }
+
+  update(){
+    this.x += this.dx;
+    this.y += this.dy;
+
+    /* WALL COLLISION */
+    if(this.x < this.size || this.x > canvas.width - this.size) this.dx *= -1;
+    if(this.y < this.size || this.y > canvas.height - this.size) this.dy *= -1;
+  }
+}
+
+/* POLYGON DRAW */
+function drawPolygon(x,y,sides,size){
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    let angle = (i/sides)*Math.PI*2;
+    let px = x + Math.cos(angle)*size;
+    let py = y + Math.sin(angle)*size;
+    if(i===0) ctx.moveTo(px,py);
+    else ctx.lineTo(px,py);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+/* CREATE SHAPES */
+let shapes = [];
+for(let i=0;i<35;i++){
+  shapes.push(new Shape());
+}
+
+/* 🔥 COLLISION FIX (NO STICK) */
+function handleCollision(){
+  for(let i=0;i<shapes.length;i++){
+    for(let j=i+1;j<shapes.length;j++){
+
+      let a = shapes[i];
+      let b = shapes[j];
+
+      let dx = b.x - a.x;
+      let dy = b.y - a.y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+
+      let minDist = a.size + b.size;
+
+      if(dist < minDist){
+
+        /* SEPARATE */
+        let overlap = minDist - dist;
+        let angle = Math.atan2(dy, dx);
+
+        let moveX = Math.cos(angle) * overlap / 2;
+        let moveY = Math.sin(angle) * overlap / 2;
+
+        a.x -= moveX;
+        a.y -= moveY;
+        b.x += moveX;
+        b.y += moveY;
+
+        /* SWAP VELOCITY */
+        let tempDx = a.dx;
+        let tempDy = a.dy;
+
+        a.dx = b.dx;
+        a.dy = b.dy;
+
+        b.dx = tempDx;
+        b.dy = tempDy;
+      }
+    }
+  }
+}
+
+/* ANIMATION */
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  shapes.forEach(s => s.update());
+  handleCollision();
+  shapes.forEach(s => s.draw());
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+/* NAV */
+function goTo(page){
+  window.location.href = page;
 }
 </script></body>
 </html>
