@@ -5,79 +5,112 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   font-family: Arial;
-  color: white;
-  overflow: hidden;
-}
-
-/* HEADER */
-.header {
-  position: absolute;
-  top: 20px;
-  left: 30px;
-  font-size: 22px;
-  font-weight: bold;
-}
-
-/* GRID */
-.container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  gap: 30px;
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    #fff9c4,
+    #dcedc8,
+    #f8bbd0,
+    #e1bee7,
+    #eeeeee
+  );
+}
+
+/* SHAPES */
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+.shape1 { width:200px;height:200px;background:#f8bbd0;top:10%;left:10%; }
+.shape2 { width:150px;height:150px;background:#dcedc8;bottom:15%;right:15%; }
+.shape3 { width:120px;height:120px;background:#e1bee7;top:50%;left:70%; }
+
+/* BOX */
+.container {
+  position: relative;
+  display: flex;
+  gap: 20px;
 }
 
 /* CARDS */
 .card {
-  width: 260px;
-  height: 160px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(15px);
-  border-radius: 20px;
+  width: 180px;
+  height: 140px;
+  background: #ffffff;
+  border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: 0.4s;
-  font-size: 18px;
-  padding: 20px;
+  transition: 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-10px) scale(1.05);
-  background: rgba(255,255,255,0.2);
+  transform: scale(1.08);
 }
 
-/* TRANSITION */
-.transition {
+/* 🔥 HOD LOADER */
+.loader-overlay {
   position: fixed;
-  width: 100%;
-  height: 100%;
-  background: black;
-  top: 0;
-  left: 0;
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: 0.6s ease-in-out;
-  z-index: 999;
+  top:0;left:0;
+  width:100%;height:100%;
+  background: rgba(255,255,255,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
 }
-</style></head><body><div class="transition" id="transition"></div><div class="header">HOD Dashboard</div><div class="container">  <div class="card" onclick="goTo('create.html')">
-    Create Feedback Form
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1.154;
+  display: grid;
+  color: #000;
+  background:
+    linear-gradient(to bottom left ,#0000 calc(50% - 1px),currentColor 0 calc(50% + 1px),#0000 0) right/50% 100%,
+    linear-gradient(to bottom right,#0000 calc(50% - 1px),currentColor 0 calc(50% + 1px),#0000 0) left /50% 100%,
+    linear-gradient(currentColor 0 0) bottom/100% 2px;
+  background-repeat: no-repeat;
+  animation: l5 4s infinite linear;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  animation: inherit;
+}
+.loader::after { animation-duration: 2s; }
+
+@keyframes l5{
+  100% {transform:rotate(1turn)}
+}
+</style></head><body><div class="loader-overlay" id="loader">
+  <div class="loader"></div>
+</div><div class="shape shape1"></div>
+<div class="shape shape2"></div>
+<div class="shape shape3"></div><div class="container">  <div class="card" onclick="goTo('create.html')">
+    Create Form
   </div>  <div class="card" onclick="goTo('view.html')">
-    View Feedbacks
+    View Feedback
   </div>  <div class="card" onclick="goTo('delete.html')">
     Remove Data
   </div></div><script>
 function goTo(page){
-  let t = document.getElementById("transition");
-  t.style.transform = "scaleY(1)";
+  document.getElementById("loader").style.display = "flex";
 
   setTimeout(()=>{
     window.location.href = page;
-  }, 600);
+  },800);
 }
 </script></body>
 </html>
