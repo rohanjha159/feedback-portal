@@ -5,50 +5,103 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, #232526, #414345);
   font-family: Arial;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    #fff9c4,
+    #dcedc8,
+    #f8bbd0,
+    #e1bee7,
+    #eeeeee
+  );
 }
+
+/* SHAPES */
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+.shape1 { width:200px;height:200px;background:#f8bbd0;top:10%;left:10%; }
+.shape2 { width:150px;height:150px;background:#dcedc8;bottom:15%;right:15%; }
+.shape3 { width:120px;height:120px;background:#e1bee7;top:50%;left:70%; }
 
 /* BOX */
 .container {
   width: 400px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(15px);
-  padding: 30px;
-  border-radius: 20px;
+  padding: 25px;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-/* INPUT */
 input, select {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
   border-radius: 10px;
   border: none;
+  background: #eeeeee;
 }
 
 /* BUTTON */
 button {
   width: 100%;
   padding: 12px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
   margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #eeeeee;
+  cursor: pointer;
 }
 
-.publish {
-  background: #00ffcc;
+/* 🔥 HOD LOADER */
+.loader-overlay {
+  position: fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background: rgba(255,255,255,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
 }
 
-.publish:hover {
-  background: #00ccaa;
+.loader {
+  width: 50px;
+  aspect-ratio: 1.154;
+  display: grid;
+  color: #000;
+  background:
+    linear-gradient(to bottom left ,#0000 calc(50% - 1px),currentColor 0 calc(50% + 1px),#0000 0) right/50% 100%,
+    linear-gradient(to bottom right,#0000 calc(50% - 1px),currentColor 0 calc(50% + 1px),#0000 0) left /50% 100%,
+    linear-gradient(currentColor 0 0) bottom/100% 2px;
+  background-repeat: no-repeat;
+  animation: l5 4s infinite linear;
 }
-</style></head><body><div class="container"><h2>Create Feedback Form</h2><label>Department</label>
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  animation: inherit;
+}
+.loader::after { animation-duration: 2s; }
+
+@keyframes l5{
+  100% {transform:rotate(1turn)}
+}
+</style></head><body><div class="loader-overlay" id="loader">
+  <div class="loader"></div>
+</div><div class="shape shape1"></div>
+<div class="shape shape2"></div>
+<div class="shape shape3"></div><div class="container"><h2>Create Feedback Form</h2><label>Department</label>
 <input type="text" value="CSE" disabled>
 
 <label>Semester</label>
@@ -65,9 +118,25 @@ button {
 <input type="text" placeholder="Enter professor">
 
 <h4>Criteria</h4>
-<input type="text" placeholder="Teaching Quality">
-<input type="text" placeholder="Punctuality">
-<input type="text" placeholder="Interaction"><button class="publish">Publish Form</button>
+<div id="criteriaBox">
+  <input type="text" placeholder="Teaching Quality">
+</div><button onclick="addCriteria()">+ Add Criteria</button>
+<button onclick="publish()">Publish</button>
 
-</div></body>
+</div><script>
+function addCriteria(){
+  let box = document.getElementById("criteriaBox");
+  let input = document.createElement("input");
+  input.placeholder = "New Criteria";
+  box.appendChild(input);
+}
+
+function publish(){
+  document.getElementById("loader").style.display = "flex";
+
+  setTimeout(()=>{
+    alert("Form Published (demo)");
+  },800);
+}
+</script></body>
 </html>
