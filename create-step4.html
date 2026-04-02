@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Form - Step 4</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"><style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+
+  background-color: #fff9c4;
+  background-image:
+    linear-gradient(#c8e6c9 1px, transparent 1px),
+    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.container {
+  width: 400px;
+  margin: auto;
+  margin-top: 50px;
+  padding: 25px;
+  background: #d2a679;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* INPUT */
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 6px 0;
+}
+
+/* BUTTON */
+button {
+  width: 95%;
+  padding: 10px;
+  margin-top: 8px;
+}
+
+/* LIST */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #eee;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* REMOVE */
+.remove {
+  background: red;
+  color: white;
+  border: none;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+</style></head><body><div class="container">  <h2>Add Students</h2>  <input type="text" id="name" placeholder="Student Name">
+  <input type="text" id="reg" placeholder="Registration Number">
+  <input type="date" id="dob"><button onclick="add()">Add Student</button>
+
+  <ul id="list"></ul><button onclick="next()">Next</button>
+
+</div><script>
+
+let students = [];
+
+function add(){
+
+  let name = document.getElementById("name").value;
+  let reg = document.getElementById("reg").value;
+  let dob = document.getElementById("dob").value;
+
+  if(name === "" || reg === "" || dob === ""){
+    alert("Fill all fields");
+    return;
+  }
+
+  students.push({name, reg, dob});
+
+  render();
+
+  document.getElementById("name").value="";
+  document.getElementById("reg").value="";
+  document.getElementById("dob").value="";
+}
+
+function render(){
+
+  let list = document.getElementById("list");
+  list.innerHTML = "";
+
+  students.forEach((s,i)=>{
+    let li = document.createElement("li");
+
+    li.innerHTML = s.name + " (" + s.reg + ")" +
+    ` <button class="remove" onclick="remove(${i})">X</button>`;
+
+    list.appendChild(li);
+  });
+}
+
+function remove(i){
+  students.splice(i,1);
+  render();
+}
+
+function next(){
+
+  if(students.length === 0){
+    alert("Add at least one student");
+    return;
+  }
+
+  localStorage.setItem("students", JSON.stringify(students));
+
+  window.location.href = "preview.html";
+}
+
+</script></body>
+</html>
