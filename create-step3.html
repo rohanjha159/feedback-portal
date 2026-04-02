@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Form - Step 3</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"><style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+
+  background-color: #fff9c4;
+  background-image:
+    linear-gradient(#c8e6c9 1px, transparent 1px),
+    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.container {
+  width: 400px;
+  margin: auto;
+  margin-top: 60px;
+  padding: 25px;
+  background: #d2a679;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* LIST */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #eee;
+  margin: 6px 0;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* BUTTON */
+button {
+  padding: 10px;
+  margin-top: 8px;
+  width: 95%;
+}
+
+/* REMOVE */
+.remove {
+  background: red;
+  color: white;
+  border: none;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+/* INPUT */
+input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 10px;
+}
+</style></head><body><div class="container">  <h2>Feedback Criteria</h2>  <ul id="list"></ul>  <input type="text" id="new" placeholder="Add New Criteria"><button onclick="add()">Add Criteria</button>
+
+<button onclick="next()">Next</button>
+
+</div><script>
+
+/* 🔥 DEFAULT CRITERIA */
+let criteria = [
+  "Teaching Effectiveness",
+  "Subject Knowledge",
+  "Clarity of Explanation",
+  "Student Interaction",
+  "Punctuality",
+  "Class Management",
+  "Use of Practical Examples",
+  "Doubt Solving",
+  "Engagement Level",
+  "Syllabus Coverage"
+];
+
+function render(){
+
+  let list = document.getElementById("list");
+  list.innerHTML = "";
+
+  criteria.forEach((c,i)=>{
+    let li = document.createElement("li");
+
+    li.innerHTML = c +
+    ` <button class="remove" onclick="remove(${i})">X</button>`;
+
+    list.appendChild(li);
+  });
+}
+
+function remove(i){
+  criteria.splice(i,1);
+  render();
+}
+
+function add(){
+
+  let val = document.getElementById("new").value;
+
+  if(val === ""){
+    alert("Enter criteria");
+    return;
+  }
+
+  criteria.push(val);
+  render();
+
+  document.getElementById("new").value="";
+}
+
+function next(){
+
+  if(criteria.length === 0){
+    alert("Add at least one criteria");
+    return;
+  }
+
+  localStorage.setItem("criteria", JSON.stringify(criteria));
+
+  window.location.href = "create-step4.html";
+}
+
+render();
+
+</script></body>
+</html>
