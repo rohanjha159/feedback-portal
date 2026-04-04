@@ -1,58 +1,251 @@
 <!DOCTYPE html><html>
 <head>
-<title>Subjects</title>
-<style>
-body{margin:0;background:#fff9c4;font-family:Poppins}/* layout */
-.main{display:flex;justify-content:center;margin-top:50px}
+<title>Add Subjects</title><style>
+body {
+  margin: 0;
+  font-family: Poppins;
+  overflow-y: auto;
 
-/* left input */
-.box{background:#d2a679;padding:20px;border-radius:10px}
-
-/* right list */
-.list{
-background:#fff;padding:10px;width:200px;margin-left:20px;
-max-height:250px;overflow-y:auto;
+  background-color: #fff9c4;
+  background-image:
+    linear-gradient(#c8e6c9 1px, transparent 1px),
+    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-li{background:#eee;margin:5px;padding:5px;display:flex;justify-content:space-between}
-.remove{background:red;color:white}
-</style>
+/* CANVAS */
+canvas{
+  position: fixed;
+  top:0;
+  left:0;
+  z-index:0;
+}
 
-</head><body><div class="main"><div class="box">
-<h3>Add Subject</h3>
-<input id="sub" placeholder="Subject"><br>
-<input id="prof" placeholder="Professor"><br>
-<button onclick="add()">Add</button>
-</div><div class="list">
-<ul id="list"></ul>
-</div></div><script>
-let data=[];
+/* MAIN */
+.main {
+  position: relative;
+  z-index:2;
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  gap: 30px;
+  flex-wrap: wrap;
+}
 
+/* WOOD FRAME */
+.box, .side {
+  background: #8b5a2b;
+  padding: 12px;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* NAILS */
+.nail{
+  width:10px;
+  height:10px;
+  background: radial-gradient(circle,#ddd,#666);
+  border-radius:50%;
+  position:absolute;
+}
+.n1{top:5px;left:5px}
+.n2{top:5px;right:5px}
+.n3{bottom:5px;left:5px}
+.n4{bottom:5px;right:5px}
+
+/* INNER */
+.inner-box, .inner-side {
+  background: #d2a679;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* SIZE */
+.inner-box{width:260px;text-align:center}
+.inner-side{
+  width:300px;
+  max-height:300px;
+  overflow-y:auto;
+}
+
+/* INPUT */
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+/* BUTTON */
+button {
+  width: 95%;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* LIST */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #eee;
+  margin: 6px 0;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+/* SMALL REMOVE BUTTON */
+.remove {
+  background: red;
+  color: white;
+  border: none;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+</style></head><body><canvas id="canvas"></canvas>
+
+<div class="main">  <!-- LEFT -->  <div class="box">
+    <div class="nail n1"></div>
+    <div class="nail n2"></div>
+    <div class="nail n3"></div>
+    <div class="nail n4"></div><div class="inner-box">
+  <h3>Add Subject</h3>
+
+  <input id="sub" placeholder="Subject Name">
+  <input id="prof" placeholder="Professor Name">
+
+  <button onclick="add()">Add</button>
+</div>
+
+  </div>  <!-- RIGHT -->  <div class="side">
+    <div class="nail n1"></div>
+    <div class="nail n2"></div>
+    <div class="nail n3"></div>
+    <div class="nail n4"></div><div class="inner-side">
+  <h4>Added Subjects</h4>
+  <ul id="list"></ul>
+</div>
+
+  </div></div><script>
+
+/* DATA */
+let data = [];
+
+/* ADD */
 function add(){
-let s=sub.value;
-let p=prof.value;
+  let s = sub.value.trim();
+  let p = prof.value.trim();
 
-if(!s||!p)return alert("Fill both");
+  if(!s || !p){
+    alert("Fill both fields");
+    return;
+  }
 
-data.push({s,p});
-render();
+  data.push({s,p});
+  render();
 
-sub.value="";prof.value="";
+  sub.value="";
+  prof.value="";
 }
 
+/* RENDER */
 function render(){
-list.innerHTML="";
-data.forEach((d,i)=>{
-let li=document.createElement("li");
-li.innerHTML=d.s+"-"+d.p+
-<button class="remove" onclick="del(${i})">X</button>;
-list.appendChild(li);
-});
+  list.innerHTML="";
+
+  data.forEach((d,i)=>{
+    let li=document.createElement("li");
+
+    li.innerHTML = `
+      <span>${d.s} - ${d.p}</span>
+      <button class="remove" onclick="remove(${i})">X</button>
+    `;
+
+    list.appendChild(li);
+  });
 }
 
-function del(i){
-data.splice(i,1);
-render();
+/* REMOVE */
+function remove(i){
+  data.splice(i,1);
+  render();
 }
+
+/* SHAPES ENGINE */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+const colors = ["#ffcdd2","#bbdefb","#c8e6c9","#f8bbd0","#e1bee7"];
+
+class Shape{
+  constructor(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.dx=(Math.random()-0.5)*0.8;
+    this.dy=(Math.random()-0.5)*0.8;
+    this.size=12+Math.random()*8;
+    this.color=colors[Math.floor(Math.random()*colors.length)];
+    this.type=Math.floor(Math.random()*5);
+  }
+
+  draw(){
+    ctx.fillStyle=this.color;
+
+    if(this.type===0){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fill();
+    }
+    else if(this.type===1){
+      ctx.fillRect(this.x,this.y,this.size,this.size);
+    }
+    else if(this.type===2){
+      ctx.fillRect(this.x,this.y,this.size*1.5,this.size);
+    }
+    else{
+      drawPoly(this.x,this.y,5,this.size);
+    }
+  }
+
+  update(){
+    this.x+=this.dx;
+    this.y+=this.dy;
+
+    if(this.x<0||this.x>canvas.width)this.dx*=-1;
+    if(this.y<0||this.y>canvas.height)this.dy*=-1;
+  }
+}
+
+function drawPoly(x,y,sides,size){
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    let angle=(i/sides)*Math.PI*2;
+    let px=x+Math.cos(angle)*size;
+    let py=y+Math.sin(angle)*size;
+    if(i===0)ctx.moveTo(px,py);
+    else ctx.lineTo(px,py);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+let shapes=[];
+for(let i=0;i<40;i++) shapes.push(new Shape());
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  shapes.forEach(s=>{s.update();s.draw();});
+  requestAnimationFrame(animate);
+}
+animate();
+
 </script></body>
 </html>
