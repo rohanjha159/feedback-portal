@@ -6,7 +6,6 @@ body {
   overflow: hidden;
   font-family: Poppins;
 
-  /* GREEN CROSS BG */
   background-color: #fff9c4;
   background-image:
     linear-gradient(#c8e6c9 1px, transparent 1px),
@@ -32,10 +31,6 @@ canvas {
   background: #8b5a2b;
   padding: 15px;
   border-radius: 12px;
-  box-shadow:
-    inset 0 0 10px rgba(0,0,0,0.6),
-    4px 4px 0 #6e4420,
-    -4px -4px 0 #a9743a;
 }
 
 /* INNER */
@@ -54,7 +49,6 @@ canvas {
   border-radius: 50%;
   position: absolute;
 }
-
 .s1 { top:5px; left:5px; }
 .s2 { top:5px; right:5px; }
 .s3 { bottom:5px; left:5px; }
@@ -74,39 +68,52 @@ button {
   cursor: pointer;
 }
 
-/* LOADER */
+/* 🔥 LOADER OVERLAY */
 .loader-overlay {
   position: fixed;
   top:0;left:0;
   width:100%;height:100%;
-  display:none;
+  display:flex;
   justify-content:center;
   align-items:center;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.9);
   z-index:999;
 }
 
+/* 🔥 TERA EXACT LOADER */
 .loader {
-  width: 50px;
-  aspect-ratio: 1;
+  width: 25px;
+  height: 50px;
   display: grid;
   color: #000;
   background:
-    linear-gradient(90deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/100% 14px,
-    linear-gradient(0deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/14px 100%,
-    linear-gradient(currentColor 0 0) center/100% 2px,
-    linear-gradient(currentColor 0 0) center/2px 100%;
-  animation: l6 4s infinite linear;
+    linear-gradient(currentColor 0 0) top/100% 2px,
+    radial-gradient(farthest-side at  top, #0000 calc(100% - 2px),currentColor calc(100% - 1px) ,#0000) top,
+    linear-gradient(currentColor 0 0) bottom/100% 2px,
+    radial-gradient(farthest-side at  bottom, #0000 calc(100% - 2px),currentColor calc(100% - 1px) ,#0000) bottom;
+  background-size: 100% 1px,100% 50%; 
+  background-repeat: no-repeat;
+  animation: l18 4s infinite linear;
 }
-
-@keyframes l6 {
-  100% { transform: rotate(1turn); }
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  border: inherit;
+  animation: inherit;
 }
-</style></head><body><canvas id="canvas"></canvas>
-
-<div class="loader-overlay" id="loader">
+.loader::after {
+  animation-duration: 2s;
+}
+@keyframes l18 {
+  100% {transform: rotate(1turn)}
+}
+</style></head><body><!-- LOADER --><div class="loader-overlay" id="loader">
   <div class="loader"></div>
-</div><div class="frame">
+</div><canvas id="canvas"></canvas>
+
+<div class="frame">
 <div class="screw s1"></div>
 <div class="screw s2"></div>
 <div class="screw s3"></div>
@@ -117,6 +124,13 @@ button {
 </div>
 </div><script>
 
+/* PAGE LOAD LOADER */
+window.onload = function(){
+  setTimeout(()=>{
+    document.getElementById("loader").style.display = "none";
+  },1000);
+};
+
 /* LOGIN */
 function login(){
 let u=document.getElementById("user").value;
@@ -124,13 +138,17 @@ let p=document.getElementById("pass").value;
 
 if(u==="hod" && p==="123"){
 document.getElementById("loader").style.display="flex";
-setTimeout(()=>window.location="dashboard.html",800);
+
+setTimeout(()=>{
+window.location="dashboard.html";
+},800);
+
 }else{
 alert("Username: hod | Password: 123");
 }
 }
 
-/* SHAPES ENGINE */
+/* SHAPES */
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -164,11 +182,8 @@ class Shape {
     else if(this.type===2){
       ctx.fillRect(this.x,this.y,this.size*1.5,this.size);
     }
-    else if(this.type===3){
+    else{
       drawPoly(this.x,this.y,5,this.size);
-    }
-    else if(this.type===4){
-      drawPoly(this.x,this.y,6,this.size);
     }
   }
 
