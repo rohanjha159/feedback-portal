@@ -1,52 +1,36 @@
 <!DOCTYPE html><html>
 <head>
 <title>Add Students</title><style>
-body {
-  margin: 0;
-  font-family: Poppins;
-  overflow-y: auto;
-
-  background-color: #fff9c4;
-  background-image:
-    linear-gradient(#c8e6c9 1px, transparent 1px),
-    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
-  background-size: 40px 40px;
+body{
+margin:0;font-family:Poppins;overflow-y:auto;
+background-color:#fff9c4;
+background-image:
+linear-gradient(#c8e6c9 1px,transparent 1px),
+linear-gradient(90deg,#c8e6c9 1px,transparent 1px);
+background-size:40px 40px;
 }
 
 /* CANVAS */
-canvas{
-  position: fixed;
-  top:0;
-  left:0;
-  z-index:0;
-}
+canvas{position:fixed;top:0;left:0;z-index:0}
 
 /* MAIN */
-.main {
-  position: relative;
-  z-index:2;
-  display: flex;
-  justify-content: center;
-  margin-top: 80px;
-  gap: 30px;
-  flex-wrap: wrap;
+.main{
+position:relative;z-index:2;
+display:flex;justify-content:center;
+gap:30px;margin-top:80px;flex-wrap:wrap;
 }
 
 /* WOOD */
-.box, .side {
-  background: #8b5a2b;
-  padding: 12px;
-  border-radius: 12px;
-  position: relative;
+.box,.side{
+background:#8b5a2b;
+padding:12px;border-radius:12px;position:relative;
 }
 
 /* NAILS */
 .nail{
-  width:10px;
-  height:10px;
-  background: radial-gradient(circle,#ddd,#666);
-  border-radius:50%;
-  position:absolute;
+width:10px;height:10px;
+background:radial-gradient(circle,#ddd,#666);
+border-radius:50%;position:absolute;
 }
 .n1{top:5px;left:5px}
 .n2{top:5px;right:5px}
@@ -54,199 +38,238 @@ canvas{
 .n4{bottom:5px;right:5px}
 
 /* INNER */
-.inner-box, .inner-side {
-  background: #d2a679;
-  padding: 15px;
-  border-radius: 10px;
+.inner-box,.inner-side{
+background:#d2a679;padding:15px;border-radius:10px;
 }
 
-/* SIZE */
 .inner-box{width:260px;text-align:center}
+
 .inner-side{
-  width:300px;
-  max-height:300px;
-  overflow-y:auto;
+width:300px;max-height:300px;overflow-y:auto;
 }
 
 /* INPUT */
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 8px 0;
+input{
+width:90%;padding:10px;margin:8px 0;
 }
 
 /* BUTTON */
-button {
-  width: 95%;
-  padding: 10px;
-  cursor: pointer;
+button{
+width:95%;padding:10px;cursor:pointer;
 }
 
 /* LIST */
-ul {
-  list-style: none;
-  padding: 0;
+ul{list-style:none;padding:0}
+
+li{
+background:#eee;margin:6px 0;padding:6px;
+border-radius:6px;
+display:flex;justify-content:space-between;
+align-items:center;font-size:14px;
 }
 
-li {
-  background: #eee;
-  margin: 6px 0;
-  padding: 6px;
-  border-radius: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
+/* REMOVE */
+.remove{
+background:red;color:white;border:none;
+padding:2px 6px;font-size:12px;
 }
 
-/* SMALL REMOVE */
-.remove {
-  background: red;
-  color: white;
-  border: none;
-  padding: 2px 6px;
-  font-size: 12px;
-  cursor: pointer;
+/* NEXT BUTTON */
+.next-btn{
+position:fixed;
+bottom:15px;
+right:20px;
+padding:12px 20px;
+background:#8b5a2b;
+color:white;
+border:none;
+border-radius:8px;
+z-index:5;
 }
-</style></head><body><canvas id="canvas"></canvas>
 
-<div class="main">  <!-- LEFT -->  <div class="box">
-    <div class="nail n1"></div>
-    <div class="nail n2"></div>
-    <div class="nail n3"></div>
-    <div class="nail n4"></div><div class="inner-box">
-  <h3>Add Students</h3>
+/* LOADER */
+.loader-overlay{
+position:fixed;top:0;left:0;width:100%;height:100%;
+display:none;justify-content:center;align-items:center;
+background:rgba(255,255,255,0.9);z-index:999;
+}
 
-  <input id="name" placeholder="Student Name">
-  <input id="reg" placeholder="Registration Number">
-  <input id="dob" type="date">
+/* TERA LOADER */
+.loader {
+  width: 25px;
+  height: 50px;
+  display: grid;
+  color: #000;
+  background:
+    linear-gradient(currentColor 0 0) top/100% 2px,
+    radial-gradient(farthest-side at  top,#0000 calc(100% - 2px),currentColor calc(100% - 1px),#0000) top,
+    linear-gradient(currentColor 0 0) bottom/100% 2px,
+    radial-gradient(farthest-side at  bottom,#0000 calc(100% - 2px),currentColor calc(100% - 1px),#0000) bottom;
+  background-size:100% 1px,100% 50%;
+  background-repeat:no-repeat;
+  animation:l18 4s infinite linear;
+}
+.loader::before,
+.loader::after {
+  content:"";
+  grid-area:1/1;
+  background:inherit;
+  border:inherit;
+  animation:inherit;
+}
+.loader::after {animation-duration:2s}
+@keyframes l18{100%{transform:rotate(1turn)}}
+</style></head><body><!-- LOADER --><div class="loader-overlay" id="loader">
+<div class="loader"></div>
+</div><canvas id="canvas"></canvas>
 
-  <button onclick="add()">Add</button>
+<div class="main"><!-- LEFT --><div class="box">
+<div class="nail n1"></div>
+<div class="nail n2"></div>
+<div class="nail n3"></div>
+<div class="nail n4"></div><div class="inner-box">
+<h3>Add Students</h3><input id="name" placeholder="Student Name">
+<input id="reg" placeholder="Registration Number">
+<input id="dob" type="date"><button onclick="add()">Add</button>
+
 </div>
-
-  </div>  <!-- RIGHT -->  <div class="side">
-    <div class="nail n1"></div>
-    <div class="nail n2"></div>
-    <div class="nail n3"></div>
-    <div class="nail n4"></div><div class="inner-side">
-  <h4>Added Students</h4>
-  <ul id="list"></ul>
+</div><!-- RIGHT --><div class="side">
+<div class="nail n1"></div>
+<div class="nail n2"></div>
+<div class="nail n3"></div>
+<div class="nail n4"></div><div class="inner-side">
+<h4>Student List</h4>
+<ul id="list"></ul>
 </div>
+</div></div><!-- NEXT BUTTON --><button class="next-btn" onclick="nextStep()">Next</button>
 
-  </div></div><script>
+<script>
 
-let students = [];
+let students=[];
 
 /* ADD */
 function add(){
+let name=document.getElementById("name").value.trim();
+let reg=document.getElementById("reg").value.trim();
+let dob=document.getElementById("dob").value;
 
-  let name = document.getElementById("name").value.trim();
-  let reg = document.getElementById("reg").value.trim();
-  let dob = document.getElementById("dob").value;
+if(!name||!reg||!dob){
+alert("Fill all fields");
+return;
+}
 
-  if(!name || !reg || !dob){
-    alert("Fill all fields");
-    return;
-  }
+students.push({name,reg,dob});
+render();
 
-  students.push({name, reg, dob});
-  render();
-
-  document.getElementById("name").value="";
-  document.getElementById("reg").value="";
-  document.getElementById("dob").value="";
+document.getElementById("name").value="";
+document.getElementById("reg").value="";
+document.getElementById("dob").value="";
 }
 
 /* RENDER */
 function render(){
-  list.innerHTML="";
+let list=document.getElementById("list");
+list.innerHTML="";
 
-  students.forEach((s,i)=>{
-    let li=document.createElement("li");
+students.forEach((s,i)=>{
+let li=document.createElement("li");
 
-    li.innerHTML = `
-      <span>${s.name} (${s.reg})</span>
-      <button class="remove" onclick="remove(${i})">X</button>
-    `;
+li.innerHTML=`
+<span>${s.name} (${s.reg})</span>
+<button class="remove" onclick="removeItem(${i})">X</button>
+`;
 
-    list.appendChild(li);
-  });
+list.appendChild(li);
+});
 }
 
 /* REMOVE */
-function remove(i){
-  students.splice(i,1);
-  render();
+function removeItem(i){
+students.splice(i,1);
+render();
+}
+
+/* NEXT */
+function nextStep(){
+
+if(students.length===0){
+alert("Add at least one student");
+return;
+}
+
+localStorage.setItem("students",JSON.stringify(students));
+
+document.getElementById("loader").style.display="flex";
+
+setTimeout(()=>{
+window.location="preview.html";
+},800);
 }
 
 /* SHAPES */
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-const colors = ["#ffcdd2","#bbdefb","#c8e6c9","#f8bbd0","#e1bee7"];
+const colors=["#ffcdd2","#bbdefb","#c8e6c9","#f8bbd0","#e1bee7"];
 
 class Shape{
-  constructor(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.dx=(Math.random()-0.5)*0.8;
-    this.dy=(Math.random()-0.5)*0.8;
-    this.size=12+Math.random()*8;
-    this.color=colors[Math.floor(Math.random()*colors.length)];
-    this.type=Math.floor(Math.random()*5);
-  }
+constructor(){
+this.x=Math.random()*canvas.width;
+this.y=Math.random()*canvas.height;
+this.dx=(Math.random()-0.5)*0.6;
+this.dy=(Math.random()-0.5)*0.6;
+this.size=10+Math.random()*10;
+this.color=colors[Math.floor(Math.random()*colors.length)];
+this.type=Math.floor(Math.random()*4);
+}
 
-  draw(){
-    ctx.fillStyle=this.color;
+draw(){
+ctx.fillStyle=this.color;
 
-    if(this.type===0){
-      ctx.beginPath();
-      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-      ctx.fill();
-    }
-    else if(this.type===1){
-      ctx.fillRect(this.x,this.y,this.size,this.size);
-    }
-    else if(this.type===2){
-      ctx.fillRect(this.x,this.y,this.size*1.5,this.size);
-    }
-    else{
-      drawPoly(this.x,this.y,5,this.size);
-    }
-  }
+if(this.type===0){
+ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();
+}
+else if(this.type===1){
+ctx.fillRect(this.x,this.y,this.size,this.size);
+}
+else if(this.type===2){
+ctx.fillRect(this.x,this.y,this.size*1.5,this.size);
+}
+else{
+drawPoly(this.x,this.y,6,this.size);
+}
+}
 
-  update(){
-    this.x+=this.dx;
-    this.y+=this.dy;
-
-    if(this.x<0||this.x>canvas.width)this.dx*=-1;
-    if(this.y<0||this.y>canvas.height)this.dy*=-1;
-  }
+update(){
+this.x+=this.dx;
+this.y+=this.dy;
+if(this.x<0||this.x>canvas.width)this.dx*=-1;
+if(this.y<0||this.y>canvas.height)this.dy*=-1;
+}
 }
 
 function drawPoly(x,y,sides,size){
-  ctx.beginPath();
-  for(let i=0;i<sides;i++){
-    let angle=(i/sides)*Math.PI*2;
-    let px=x+Math.cos(angle)*size;
-    let py=y+Math.sin(angle)*size;
-    if(i===0)ctx.moveTo(px,py);
-    else ctx.lineTo(px,py);
-  }
-  ctx.closePath();
-  ctx.fill();
+ctx.beginPath();
+for(let i=0;i<sides;i++){
+let angle=(i/sides)*Math.PI*2;
+let px=x+Math.cos(angle)*size;
+let py=y+Math.sin(angle)*size;
+if(i===0)ctx.moveTo(px,py);
+else ctx.lineTo(px,py);
+}
+ctx.closePath();
+ctx.fill();
 }
 
 let shapes=[];
-for(let i=0;i<40;i++) shapes.push(new Shape());
+for(let i=0;i<50;i++)shapes.push(new Shape());
 
 function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  shapes.forEach(s=>{s.update();s.draw();});
-  requestAnimationFrame(animate);
+ctx.clearRect(0,0,canvas.width,canvas.height);
+shapes.forEach(s=>{s.update();s.draw();});
+requestAnimationFrame(animate);
 }
 animate();
 
