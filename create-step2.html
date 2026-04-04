@@ -1,125 +1,58 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html>
 <head>
-<meta charset="UTF-8">
-<title>Create Form - Step 2</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"><style>
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: 'Poppins', sans-serif;
+<title>Subjects</title>
+<style>
+body{margin:0;background:#fff9c4;font-family:Poppins}/* layout */
+.main{display:flex;justify-content:center;margin-top:50px}
 
-  background-color: #fff9c4;
-  background-image:
-    linear-gradient(#c8e6c9 1px, transparent 1px),
-    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
-  background-size: 40px 40px;
+/* left input */
+.box{background:#d2a679;padding:20px;border-radius:10px}
+
+/* right list */
+.list{
+background:#fff;padding:10px;width:200px;margin-left:20px;
+max-height:250px;overflow-y:auto;
 }
 
-/* CONTAINER */
-.container {
-  width: 380px;
-  margin: auto;
-  margin-top: 80px;
-  padding: 25px;
-  background: #d2a679;
-  border-radius: 10px;
-  text-align: center;
-}
+li{background:#eee;margin:5px;padding:5px;display:flex;justify-content:space-between}
+.remove{background:red;color:white}
+</style>
 
-/* INPUT */
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 8px 0;
-}
-
-/* BUTTON */
-button {
-  width: 95%;
-  padding: 10px;
-  margin-top: 8px;
-}
-
-/* LIST */
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  background: #eee;
-  margin: 5px 0;
-  padding: 8px;
-  border-radius: 6px;
-  display: flex;
-  justify-content: space-between;
-}
-
-/* REMOVE BUTTON */
-.remove {
-  background: red;
-  color: white;
-  border: none;
-  padding: 3px 8px;
-  cursor: pointer;
-}
-</style></head><body><div class="container">  <h2>Add Subjects</h2>  <input type="text" id="subject" placeholder="Enter Subject">
-  <input type="text" id="prof" placeholder="Enter Professor Name"><button onclick="add()">Add</button>
-
-  <ul id="list"></ul><button onclick="next()">Next</button>
-
-</div><script>
-
-let subjects = [];
+</head><body><div class="main"><div class="box">
+<h3>Add Subject</h3>
+<input id="sub" placeholder="Subject"><br>
+<input id="prof" placeholder="Professor"><br>
+<button onclick="add()">Add</button>
+</div><div class="list">
+<ul id="list"></ul>
+</div></div><script>
+let data=[];
 
 function add(){
+let s=sub.value;
+let p=prof.value;
 
-  let s = document.getElementById("subject").value;
-  let p = document.getElementById("prof").value;
+if(!s||!p)return alert("Fill both");
 
-  if(s === "" || p === ""){
-    alert("Fill both fields");
-    return;
-  }
+data.push({s,p});
+render();
 
-  subjects.push({subject:s, prof:p});
-
-  render();
-
-  document.getElementById("subject").value="";
-  document.getElementById("prof").value="";
+sub.value="";prof.value="";
 }
 
 function render(){
-
-  let list = document.getElementById("list");
-  list.innerHTML = "";
-
-  subjects.forEach((item,index)=>{
-    let li = document.createElement("li");
-
-    li.innerHTML = item.subject + " - " + item.prof +
-    ` <button class="remove" onclick="remove(${index})">X</button>`;
-
-    list.appendChild(li);
-  });
+list.innerHTML="";
+data.forEach((d,i)=>{
+let li=document.createElement("li");
+li.innerHTML=d.s+"-"+d.p+
+<button class="remove" onclick="del(${i})">X</button>;
+list.appendChild(li);
+});
 }
 
-function remove(i){
-  subjects.splice(i,1);
-  render();
+function del(i){
+data.splice(i,1);
+render();
 }
-
-function next(){
-
-  if(subjects.length === 0){
-    alert("Add at least one subject");
-    return;
-  }
-
-  localStorage.setItem("subjects", JSON.stringify(subjects));
-
-  window.location.href = "create-step3.html";
-}
-
 </script></body>
 </html>
