@@ -1,105 +1,210 @@
 <!DOCTYPE html><html>
 <head>
-<title>HoD Login</title>
-<style>
-body{
-margin:0;overflow:hidden;font-family:Poppins;
-background:#fff9c4;
-}/* canvas */
-canvas{position:fixed;top:0;left:0;z-index:0}
+<title>HoD Login</title><style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Poppins;
 
-/* frame */
-.frame{
-position:relative;z-index:2;width:350px;margin:auto;margin-top:120px;
-background:#8b5a2b;padding:15px;border-radius:10px;
+  /* GREEN CROSS BG */
+  background-color: #fff9c4;
+  background-image:
+    linear-gradient(#c8e6c9 1px, transparent 1px),
+    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
+  background-size: 40px 40px;
 }
-.container{background:#d2a679;padding:20px;border-radius:8px;text-align:center}
 
-/* screws */
-.screw{width:12px;height:12px;background:#ccc;border-radius:50%;position:absolute}
-.s1{top:5px;left:5px}.s2{top:5px;right:5px}
-.s3{bottom:5px;left:5px}.s4{bottom:5px;right:5px}
-
-/* inputs */
-input{width:90%;padding:10px;margin:10px 0}
-button{width:95%;padding:10px}
-
-/* loader */
-.loader-overlay{
-position:fixed;top:0;left:0;width:100%;height:100%;
-display:none;justify-content:center;align-items:center;
-background:rgba(255,255,255,0.8);z-index:999;
+/* CANVAS */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
-.loader{
-width:50px;aspect-ratio:1;display:grid;color:#000;
-background:
-linear-gradient(90deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/100% 14px,
-linear-gradient(0deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/14px 100%,
-linear-gradient(currentColor 0 0) center/100% 2px,
-linear-gradient(currentColor 0 0) center/2px 100%;
-animation:l6 4s infinite linear;
+
+/* FRAME */
+.frame {
+  position: relative;
+  z-index: 2;
+  width: 350px;
+  margin: auto;
+  margin-top: 120px;
+  background: #8b5a2b;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 0 10px rgba(0,0,0,0.6),
+    4px 4px 0 #6e4420,
+    -4px -4px 0 #a9743a;
 }
-@keyframes l6{100%{transform:rotate(1turn)}}
-</style>
 
-</head><body><canvas id="canvas"></canvas>
+/* INNER */
+.container {
+  background: #d2a679;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
 
-<div class="loader-overlay" id="loader"><div class="loader"></div></div><div class="frame">
-<div class="screw s1"></div><div class="screw s2"></div>
-<div class="screw s3"></div><div class="screw s4"></div><div class="container">
-<h2>HoD Login</h2>
-<input id="user" placeholder="Username">
-<input id="pass" placeholder="Password">
-<button onclick="login()">Login</button>
+/* SCREWS */
+.screw {
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 30% 30%, #ddd, #777);
+  border-radius: 50%;
+  position: absolute;
+}
+
+.s1 { top:5px; left:5px; }
+.s2 { top:5px; right:5px; }
+.s3 { bottom:5px; left:5px; }
+.s4 { bottom:5px; right:5px; }
+
+/* INPUT */
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* BUTTON */
+button {
+  width: 95%;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* LOADER */
+.loader-overlay {
+  position: fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background: rgba(255,255,255,0.8);
+  z-index:999;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  color: #000;
+  background:
+    linear-gradient(90deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/100% 14px,
+    linear-gradient(0deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/14px 100%,
+    linear-gradient(currentColor 0 0) center/100% 2px,
+    linear-gradient(currentColor 0 0) center/2px 100%;
+  animation: l6 4s infinite linear;
+}
+
+@keyframes l6 {
+  100% { transform: rotate(1turn); }
+}
+</style></head><body><canvas id="canvas"></canvas>
+
+<div class="loader-overlay" id="loader">
+  <div class="loader"></div>
+</div><div class="frame">
+<div class="screw s1"></div>
+<div class="screw s2"></div>
+<div class="screw s3"></div>
+<div class="screw s4"></div><div class="container">
+<h2>HoD Login</h2><input id="user" placeholder="Username">
+<input id="pass" placeholder="Password"><button onclick="login()">Login</button>
+
 </div>
 </div><script>
 
-/* LOGIN FIX */
+/* LOGIN */
 function login(){
 let u=document.getElementById("user").value;
 let p=document.getElementById("pass").value;
 
 if(u==="hod" && p==="123"){
-goTo("dashboard.html");
+document.getElementById("loader").style.display="flex";
+setTimeout(()=>window.location="dashboard.html",800);
 }else{
 alert("Username: hod | Password: 123");
 }
 }
 
-/* loader */
-function goTo(p){
-document.getElementById("loader").style.display="flex";
-setTimeout(()=>window.location=p,800);
+/* SHAPES ENGINE */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const colors = ["#ffcdd2","#bbdefb","#c8e6c9","#f8bbd0","#e1bee7"];
+
+class Shape {
+  constructor(){
+    this.size = 15 + Math.random()*10;
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.dx = (Math.random()-0.5)*0.8;
+    this.dy = (Math.random()-0.5)*0.8;
+    this.color = colors[Math.floor(Math.random()*colors.length)];
+    this.type = Math.floor(Math.random()*5);
+  }
+
+  draw(){
+    ctx.fillStyle = this.color;
+
+    if(this.type===0){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fill();
+    }
+    else if(this.type===1){
+      ctx.fillRect(this.x,this.y,this.size,this.size);
+    }
+    else if(this.type===2){
+      ctx.fillRect(this.x,this.y,this.size*1.5,this.size);
+    }
+    else if(this.type===3){
+      drawPoly(this.x,this.y,5,this.size);
+    }
+    else if(this.type===4){
+      drawPoly(this.x,this.y,6,this.size);
+    }
+  }
+
+  update(){
+    this.x += this.dx;
+    this.y += this.dy;
+
+    if(this.x < 0 || this.x > canvas.width) this.dx *= -1;
+    if(this.y < 0 || this.y > canvas.height) this.dy *= -1;
+  }
 }
 
-/* shapes */
-const c=document.getElementById("canvas");
-const ctx=c.getContext("2d");
-c.width=innerWidth;c.height=innerHeight;
+function drawPoly(x,y,sides,size){
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    let angle = (i/sides)*Math.PI*2;
+    let px = x + Math.cos(angle)*size;
+    let py = y + Math.sin(angle)*size;
+    if(i===0) ctx.moveTo(px,py);
+    else ctx.lineTo(px,py);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
 
 let shapes=[];
-for(let i=0;i<25;i++){
-shapes.push({
-x:Math.random()*c.width,
-y:Math.random()*c.height,
-dx:(Math.random()-0.5),
-dy:(Math.random()-0.5),
-r:15,
-color:["#ffcdd2","#bbdefb","#c8e6c9","#f8bbd0"][Math.floor(Math.random()*4)]
-});
+for(let i=0;i<40;i++){
+  shapes.push(new Shape());
 }
 
-function draw(){
-ctx.clearRect(0,0,c.width,c.height);
-shapes.forEach(s=>{
-s.x+=s.dx;s.y+=s.dy;
-if(s.x<0||s.x>c.width)s.dx*=-1;
-if(s.y<0||s.y>c.height)s.dy*=-1;
-ctx.fillStyle=s.color;
-ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
-});
-requestAnimationFrame(draw);
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  shapes.forEach(s=>{s.update();s.draw();});
+  requestAnimationFrame(animate);
 }
-draw();
+animate();
+
 </script></body>
 </html>
