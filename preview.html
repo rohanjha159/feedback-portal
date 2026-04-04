@@ -1,98 +1,244 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html>
 <head>
-<meta charset="UTF-8">
-<title>Preview</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"><style>
-body {
-  margin: 0;
-  overflow: auto;
-  font-family: 'Poppins', sans-serif;
+<title>Preview</title><style>
+body{
+margin:0;
+font-family:Poppins;
+overflow:hidden;
 
-  background-color: #fff9c4;
-  background-image:
-    linear-gradient(#c8e6c9 1px, transparent 1px),
-    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
-  background-size: 40px 40px;
+background-color:#fff9c4;
+background-image:
+linear-gradient(#c8e6c9 1px,transparent 1px),
+linear-gradient(90deg,#c8e6c9 1px,transparent 1px);
+background-size:40px 40px;
 }
 
-.container {
-  width: 500px;
-  margin: auto;
-  margin-top: 30px;
-  padding: 20px;
-  background: #d2a679;
-  border-radius: 10px;
+/* CANVAS FIX */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:1; /* 🔥 above bg */
 }
 
-/* CARD */
-.card {
-  background: #fff;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 8px;
+/* FRAME */
+.frame{
+position:relative;
+z-index:2;
+width:420px;
+margin:auto;
+margin-top:60px;
+background:#8b5a2b;
+padding:15px;
+border-radius:12px;
+}
+
+/* INNER */
+.container{
+background:#d2a679;
+padding:20px;
+border-radius:10px;
+}
+
+/* NAILS */
+.nail{
+width:10px;height:10px;
+background:radial-gradient(circle,#ddd,#666);
+border-radius:50%;
+position:absolute;
+}
+.n1{top:5px;left:5px}
+.n2{top:5px;right:5px}
+.n3{bottom:5px;left:5px}
+.n4{bottom:5px;right:5px}
+
+/* SUBJECT */
+.subject{
+margin-bottom:15px;
+padding:10px;
+background:#eee;
+border-radius:8px;
 }
 
 /* BUTTON */
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
+.btn{
+width:100%;
+padding:12px;
+margin-top:10px;
+cursor:pointer;
 }
 
-/* RATING */
-select {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0;
+/* LOADER FIX */
+.loader-overlay{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(255,255,255,0.9);
+z-index:9999; /* 🔥 topmost */
 }
-</style></head><body><div class="container">  <h2>Preview Form</h2>  <div id="preview"></div><button onclick="publish()">Publish Form</button>
+
+/* TERA LOADER */
+.loader {
+  width: 25px;
+  height: 50px;
+  display: grid;
+  color: #000;
+  background:
+    linear-gradient(currentColor 0 0) top/100% 2px,
+    radial-gradient(farthest-side at  top,#0000 calc(100% - 2px),currentColor calc(100% - 1px),#0000) top,
+    linear-gradient(currentColor 0 0) bottom/100% 2px,
+    radial-gradient(farthest-side at  bottom,#0000 calc(100% - 2px),currentColor calc(100% - 1px),#0000) bottom;
+  background-size:100% 1px,100% 50%;
+  background-repeat:no-repeat;
+  animation:l18 4s infinite linear;
+}
+.loader::before,
+.loader::after {
+  content:"";
+  grid-area:1/1;
+  background:inherit;
+  animation:inherit;
+}
+.loader::after{animation-duration:2s}
+
+@keyframes l18{
+100%{transform:rotate(1turn)}
+}
+</style></head><body><!-- LOADER --><div class="loader-overlay" id="loader">
+<div class="loader"></div>
+</div><canvas id="canvas"></canvas>
+
+<div class="frame">
+<div class="nail n1"></div>
+<div class="nail n2"></div>
+<div class="nail n3"></div>
+<div class="nail n4"></div><div class="container" id="previewBox">
+<h3>Preview</h3>
+</div><button class="btn" onclick="editForm()">Edit</button>
+<button class="btn" onclick="publishForm()">Publish</button>
 
 </div><script>
 
+/* LOAD DATA */
 let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
 let criteria = JSON.parse(localStorage.getItem("criteria")) || [];
 
-function render(){
+let box = document.getElementById("previewBox");
 
-  let container = document.getElementById("preview");
-  container.innerHTML = "";
+/* RENDER */
+subjects.forEach(s=>{
+let div=document.createElement("div");
+div.className="subject";
 
-  subjects.forEach(sub => {
+let html=<b>${s.s} by ${s.p}</b><br><br>;
+criteria.forEach(c=>{
+html+=c+"<br>";
+});
 
-    let card = document.createElement("div");
-    card.className = "card";
+div.innerHTML=html;
+box.appendChild(div);
+});
 
-    let html = <h3>${sub.subject} - ${sub.prof}</h3>;
-
-    criteria.forEach(c => {
-      html += `
-        <label>${c}</label>
-        <select>
-          <option>1</option><option>2</option><option>3</option>
-          <option>4</option><option>5</option><option>6</option>
-          <option>7</option><option>8</option><option>9</option>
-          <option>10</option>
-        </select>
-      `;
-    });
-
-    html += <input placeholder="Additional Remarks">;
-
-    card.innerHTML = html;
-
-    container.appendChild(card);
-  });
+/* BUTTONS */
+function editForm(){
+document.getElementById("loader").style.display="flex";
+setTimeout(()=>{
+window.location="create-step2.html";
+},800);
 }
 
-function publish(){
-
-  alert("Form Successfully Created ✅");
-
-  /* 🔥 future: yahan Firebase me save karenge */
-
-  window.location.href = "dashboard.html";
+function publishForm(){
+document.getElementById("loader").style.display="flex";
+setTimeout(()=>{
+alert("Published!");
+window.location="dashboard.html";
+},800);
 }
 
-render();
+/* SHAPES FINAL FIX */
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+
+const colors=["#ffcdd2","#bbdefb","#c8e6c9","#f8bbd0","#e1bee7"];
+
+class Shape{
+constructor(){
+this.x=Math.random()*canvas.width;
+this.y=Math.random()*canvas.height;
+this.dx=(Math.random()-0.5)*0.4;
+this.dy=(Math.random()-0.5)*0.4;
+this.size=10+Math.random()*12;
+this.color=colors[Math.floor(Math.random()*colors.length)];
+this.type=Math.floor(Math.random()*5);
+}
+
+draw(){
+ctx.fillStyle=this.color;
+
+if(this.type===0){
+ctx.beginPath();
+ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+ctx.fill();
+}
+else if(this.type===1){
+ctx.fillRect(this.x,this.y,this.size,this.size);
+}
+else if(this.type===2){
+ctx.fillRect(this.x,this.y,this.size*1.5,this.size);
+}
+else{
+drawPoly(this.x,this.y,5,this.size);
+}
+}
+
+update(){
+this.x+=this.dx;
+this.y+=this.dy;
+
+if(this.x<0||this.x>canvas.width)this.dx*=-1;
+if(this.y<0||this.y>canvas.height)this.dy*=-1;
+}
+}
+
+function drawPoly(x,y,sides,size){
+ctx.beginPath();
+for(let i=0;i<sides;i++){
+let angle=(i/sides)*Math.PI*2;
+let px=x+Math.cos(angle)*size;
+let py=y+Math.sin(angle)*size;
+if(i===0)ctx.moveTo(px,py);
+else ctx.lineTo(px,py);
+}
+ctx.closePath();
+ctx.fill();
+}
+
+let shapes=[];
+for(let i=0;i<70;i++){
+shapes.push(new Shape());
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+shapes.forEach(s=>{
+s.update();
+s.draw();
+});
+requestAnimationFrame(animate);
+}
+
+animate();
 
 </script></body>
 </html>
