@@ -1,16 +1,13 @@
 <!DOCTYPE html><html>
 <head>
 <title>Criteria</title><style>
-body {
-  margin: 0;
-  font-family: Poppins;
-  overflow-y: auto;
-
-  background-color: #fff9c4;
-  background-image:
-    linear-gradient(#c8e6c9 1px, transparent 1px),
-    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
-  background-size: 40px 40px;
+body{
+margin:0;font-family:Poppins;overflow-y:auto;
+background-color:#fff9c4;
+background-image:
+linear-gradient(#c8e6c9 1px,transparent 1px),
+linear-gradient(90deg,#c8e6c9 1px,transparent 1px);
+background-size:40px 40px;
 }
 
 /* CANVAS */
@@ -18,29 +15,22 @@ canvas{position:fixed;top:0;left:0;z-index:0}
 
 /* MAIN */
 .main{
-  position:relative;
-  z-index:2;
-  display:flex;
-  justify-content:center;
-  gap:30px;
-  margin-top:80px;
-  flex-wrap:wrap;
+position:relative;z-index:2;
+display:flex;justify-content:center;
+gap:30px;margin-top:80px;flex-wrap:wrap;
 }
 
 /* WOOD */
 .box,.side{
-  background:#8b5a2b;
-  padding:12px;
-  border-radius:12px;
-  position:relative;
+background:#8b5a2b;
+padding:12px;border-radius:12px;position:relative;
 }
 
 /* NAILS */
 .nail{
-  width:10px;height:10px;
-  background:radial-gradient(circle,#ddd,#666);
-  border-radius:50%;
-  position:absolute;
+width:10px;height:10px;
+background:radial-gradient(circle,#ddd,#666);
+border-radius:50%;position:absolute;
 }
 .n1{top:5px;left:5px}
 .n2{top:5px;right:5px}
@@ -49,82 +39,48 @@ canvas{position:fixed;top:0;left:0;z-index:0}
 
 /* INNER */
 .inner-box,.inner-side{
-  background:#d2a679;
-  padding:15px;
-  border-radius:10px;
+background:#d2a679;padding:15px;border-radius:10px;
 }
 
 .inner-box{width:260px;text-align:center}
 
 .inner-side{
-  width:320px;
-  max-height:300px;
-  overflow-y:auto;
+width:320px;max-height:300px;overflow-y:auto;
 }
 
-/* INPUT */
-input{
-  width:90%;
-  padding:10px;
-  margin:8px 0;
-}
+input{width:90%;padding:10px;margin:8px 0}
+button{width:95%;padding:10px;cursor:pointer}
 
-/* BUTTON */
-button{
-  width:95%;
-  padding:10px;
-  cursor:pointer;
-}
-
-/* LIST */
 ul{list-style:none;padding:0}
 
 li{
-  background:#eee;
-  margin:6px 0;
-  padding:6px;
-  border-radius:6px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:14px;
+background:#eee;margin:6px 0;padding:6px;
+border-radius:6px;
+display:flex;justify-content:space-between;
+align-items:center;font-size:14px;
 }
 
-/* REMOVE */
 .remove{
-  background:red;
-  color:white;
-  border:none;
-  padding:2px 6px;
-  font-size:12px;
+background:red;color:white;border:none;
+padding:2px 6px;font-size:12px;
 }
 
-/* NEXT BUTTON */
+/* NEXT */
 .next-btn{
-  position:fixed;
-  bottom:15px;
-  right:20px;
-  padding:12px 20px;
-  background:#8b5a2b;
-  color:white;
-  border:none;
-  border-radius:8px;
-  z-index:5;
+position:fixed;bottom:15px;right:20px;
+padding:12px 20px;background:#8b5a2b;
+color:white;border:none;border-radius:8px;
+z-index:5;
 }
 
 /* LOADER */
 .loader-overlay{
-  position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  background:rgba(255,255,255,0.9);
-  z-index:999;
+position:fixed;top:0;left:0;width:100%;height:100%;
+display:none;justify-content:center;align-items:center;
+background:rgba(255,255,255,0.9);z-index:999;
 }
 
-/* TERA LOADER */
+/* TERA EXACT LOADER */
 .loader {
   width: 25px;
   height: 50px;
@@ -132,39 +88,37 @@ li{
   color: #000;
   background:
     linear-gradient(currentColor 0 0) top/100% 2px,
-    radial-gradient(farthest-side at  top, #0000 calc(100% - 2px),currentColor calc(100% - 1px) ,#0000) top,
+    radial-gradient(farthest-side at  top,#0000 calc(100% - 2px),currentColor calc(100% - 1px),#0000) top,
     linear-gradient(currentColor 0 0) bottom/100% 2px,
-    radial-gradient(farthest-side at  bottom, #0000 calc(100% - 2px),currentColor calc(100% - 1px) ,#0000) bottom;
-  background-size: 100% 1px,100% 50%; 
-  background-repeat: no-repeat;
-  animation: l18 4s infinite linear;
+    radial-gradient(farthest-side at  bottom,#0000 calc(100% - 2px),currentColor calc(100% - 1px),#0000) bottom;
+  background-size:100% 1px,100% 50%;
+  background-repeat:no-repeat;
+  animation:l18 4s infinite linear;
 }
 .loader::before,
 .loader::after {
-  content: "";
-  grid-area: 1/1;
-  background: inherit;
-  animation: inherit;
+  content:"";
+  grid-area:1/1;
+  background:inherit;
+  border:inherit;
+  animation:inherit;
 }
-.loader::after {
-  animation-duration: 2s;
-}
-@keyframes l18 {
-  100% {transform: rotate(1turn)}
-}
-</style></head><body><!-- LOADER --><div class="loader-overlay" id="loader">
-  <div class="loader"></div>
+.loader::after {animation-duration:2s}
+@keyframes l18{100%{transform:rotate(1turn)}}
+</style></head><body><div class="loader-overlay" id="loader">
+<div class="loader"></div>
 </div><canvas id="canvas"></canvas>
 
-<div class="main"><!-- LEFT (ADD) --><div class="box">
+<div class="main"><div class="box">
 <div class="nail n1"></div>
 <div class="nail n2"></div>
 <div class="nail n3"></div>
 <div class="nail n4"></div><div class="inner-box">
-<h3>Add Criteria</h3><input id="new" placeholder="New Criteria"><button onclick="add()">Add</button>
-
+<h3>Add Criteria</h3>
+<input id="newInput" placeholder="New Criteria">
+<button onclick="add()">Add</button>
 </div>
-</div><!-- RIGHT (LIST) --><div class="side">
+</div><div class="side">
 <div class="nail n1"></div>
 <div class="nail n2"></div>
 <div class="nail n3"></div>
@@ -172,12 +126,11 @@ li{
 <h4>Criteria List</h4>
 <ul id="list"></ul>
 </div>
-</div></div><!-- NEXT --><button class="next-btn" onclick="nextStep()">Next</button>
+</div></div><button class="next-btn" onclick="nextStep()">Next</button>
 
 <script>
 
-/* DEFAULT CRITERIA */
-let criteria = [
+let criteria=[
 "Teaching Effectiveness",
 "Subject Knowledge",
 "Clarity of Explanation",
@@ -190,66 +143,43 @@ let criteria = [
 "Syllabus Coverage"
 ];
 
-/* RENDER */
 function render(){
+let list=document.getElementById("list");
 list.innerHTML="";
 
 criteria.forEach((c,i)=>{
 let li=document.createElement("li");
-
-li.innerHTML=`
-<span>${c}</span>
-<button class="remove" onclick="remove(${i})">X</button>
-`;
-
+li.innerHTML=`<span>${c}</span>
+<button class="remove" onclick="removeItem(${i})">X</button>`;
 list.appendChild(li);
 });
 }
 
-/* ADD */
 function add(){
-let val=new.value.trim();
-
-if(!val){
-alert("Enter criteria");
-return;
-}
-
+let val=document.getElementById("newInput").value.trim();
+if(!val){alert("Enter criteria");return;}
 criteria.push(val);
 render();
-new.value="";
+document.getElementById("newInput").value="";
 }
 
-/* REMOVE */
-function remove(i){
+function removeItem(i){
 criteria.splice(i,1);
 render();
 }
 
-/* NEXT */
 function nextStep(){
-
-if(criteria.length===0){
-alert("Add at least one criteria");
-return;
-}
-
+if(criteria.length===0){alert("Add at least one criteria");return;}
 localStorage.setItem("criteria",JSON.stringify(criteria));
-
 document.getElementById("loader").style.display="flex";
-
-setTimeout(()=>{
-window.location="create-step4.html";
-},800);
+setTimeout(()=>{window.location="create-step4.html";},800);
 }
 
-/* INIT */
 render();
 
 /* SHAPES */
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
-
 canvas.width=innerWidth;
 canvas.height=innerHeight;
 
@@ -259,11 +189,11 @@ class Shape{
 constructor(){
 this.x=Math.random()*canvas.width;
 this.y=Math.random()*canvas.height;
-this.dx=(Math.random()-0.5)*0.8;
-this.dy=(Math.random()-0.5)*0.8;
-this.size=12+Math.random()*8;
+this.dx=(Math.random()-0.5)*0.6;
+this.dy=(Math.random()-0.5)*0.6;
+this.size=10+Math.random()*10;
 this.color=colors[Math.floor(Math.random()*colors.length)];
-this.type=Math.floor(Math.random()*5);
+this.type=Math.floor(Math.random()*4);
 }
 
 draw(){
@@ -279,14 +209,13 @@ else if(this.type===2){
 ctx.fillRect(this.x,this.y,this.size*1.5,this.size);
 }
 else{
-drawPoly(this.x,this.y,5,this.size);
+drawPoly(this.x,this.y,6,this.size);
 }
 }
 
 update(){
 this.x+=this.dx;
 this.y+=this.dy;
-
 if(this.x<0||this.x>canvas.width)this.dx*=-1;
 if(this.y<0||this.y>canvas.height)this.dy*=-1;
 }
@@ -306,7 +235,7 @@ ctx.fill();
 }
 
 let shapes=[];
-for(let i=0;i<40;i++)shapes.push(new Shape());
+for(let i=0;i<50;i++)shapes.push(new Shape());
 
 function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
