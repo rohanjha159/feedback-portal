@@ -1,106 +1,105 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html>
 <head>
-<meta charset="UTF-8">
-<title>HoD Login</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"><style>
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: 'Poppins', sans-serif;
+<title>HoD Login</title>
+<style>
+body{
+margin:0;overflow:hidden;font-family:Poppins;
+background:#fff9c4;
+}/* canvas */
+canvas{position:fixed;top:0;left:0;z-index:0}
 
-  background-color: #fff9c4;
-  background-image:
-    linear-gradient(#c8e6c9 1px, transparent 1px),
-    linear-gradient(90deg, #c8e6c9 1px, transparent 1px);
-  background-size: 40px 40px;
+/* frame */
+.frame{
+position:relative;z-index:2;width:350px;margin:auto;margin-top:120px;
+background:#8b5a2b;padding:15px;border-radius:10px;
 }
+.container{background:#d2a679;padding:20px;border-radius:8px;text-align:center}
 
-/* CONTAINER */
-.container {
-  width: 320px;
-  margin: auto;
-  margin-top: 120px;
-  padding: 25px;
-  background: #d2a679;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+/* screws */
+.screw{width:12px;height:12px;background:#ccc;border-radius:50%;position:absolute}
+.s1{top:5px;left:5px}.s2{top:5px;right:5px}
+.s3{bottom:5px;left:5px}.s4{bottom:5px;right:5px}
+
+/* inputs */
+input{width:90%;padding:10px;margin:10px 0}
+button{width:95%;padding:10px}
+
+/* loader */
+.loader-overlay{
+position:fixed;top:0;left:0;width:100%;height:100%;
+display:none;justify-content:center;align-items:center;
+background:rgba(255,255,255,0.8);z-index:999;
 }
-
-/* INPUT */
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 6px;
+.loader{
+width:50px;aspect-ratio:1;display:grid;color:#000;
+background:
+linear-gradient(90deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/100% 14px,
+linear-gradient(0deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/14px 100%,
+linear-gradient(currentColor 0 0) center/100% 2px,
+linear-gradient(currentColor 0 0) center/2px 100%;
+animation:l6 4s infinite linear;
 }
+@keyframes l6{100%{transform:rotate(1turn)}}
+</style>
 
-/* BUTTON */
-button {
-  width: 95%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 6px;
-  background: #eee;
-  cursor: pointer;
-  transition: 0.3s;
-}
+</head><body><canvas id="canvas"></canvas>
 
-button:hover {
-  transform: scale(1.05);
-}
-
-/* LOADER */
-.loader-overlay {
-  position: fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  background: rgba(255,255,255,0.8);
-}
-
-.loader {
-  width: 50px;
-  aspect-ratio: 1;
-  display: grid;
-  color: #000;
-  background:
-    linear-gradient(90deg,currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/100% 14px,
-    linear-gradient(0deg, currentColor 2px,#0000 0 calc(100% - 2px),currentColor 0) center/14px 100%,
-    linear-gradient(currentColor 0 0) center/100% 2px,
-    linear-gradient(currentColor 0 0) center/2px 100%;
-  animation: l6 4s infinite linear;
-}
-
-@keyframes l6{
-  100% {transform:rotate(1turn)}
-}
-</style></head><body><div class="loader-overlay" id="loader">
-  <div class="loader"></div>
-</div><div class="container">
-  <h2>HoD Login</h2>  <input type="text" placeholder="Username" id="user">
-  <input type="password" placeholder="Password" id="pass"><button onclick="login()">Login</button>
-
+<div class="loader-overlay" id="loader"><div class="loader"></div></div><div class="frame">
+<div class="screw s1"></div><div class="screw s2"></div>
+<div class="screw s3"></div><div class="screw s4"></div><div class="container">
+<h2>HoD Login</h2>
+<input id="user" placeholder="Username">
+<input id="pass" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
 </div><script>
+
+/* LOGIN FIX */
 function login(){
+let u=document.getElementById("user").value;
+let p=document.getElementById("pass").value;
 
-  let u = document.getElementById("user").value;
-  let p = document.getElementById("pass").value;
-
-  /* 🔥 TEMP LOGIN (baad me DB se connect hoga) */
-  if(u === "admin" && p === "1234"){
-    document.getElementById("loader").style.display = "flex";
-
-    setTimeout(()=>{
-      window.location.href = "dashboard.html";
-    },800);
-  }
-  else{
-    alert("Invalid Credentials");
-  }
+if(u==="hod" && p==="123"){
+goTo("dashboard.html");
+}else{
+alert("Username: hod | Password: 123");
 }
+}
+
+/* loader */
+function goTo(p){
+document.getElementById("loader").style.display="flex";
+setTimeout(()=>window.location=p,800);
+}
+
+/* shapes */
+const c=document.getElementById("canvas");
+const ctx=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+
+let shapes=[];
+for(let i=0;i<25;i++){
+shapes.push({
+x:Math.random()*c.width,
+y:Math.random()*c.height,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5),
+r:15,
+color:["#ffcdd2","#bbdefb","#c8e6c9","#f8bbd0"][Math.floor(Math.random()*4)]
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,c.width,c.height);
+shapes.forEach(s=>{
+s.x+=s.dx;s.y+=s.dy;
+if(s.x<0||s.x>c.width)s.dx*=-1;
+if(s.y<0||s.y>c.height)s.dy*=-1;
+ctx.fillStyle=s.color;
+ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+});
+requestAnimationFrame(draw);
+}
+draw();
 </script></body>
 </html>
